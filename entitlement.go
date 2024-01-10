@@ -4,10 +4,14 @@ import (
 	"errors"
 )
 
-var (
-	ErrCounterExhausted = errors.New("counter exhausted")
-	ErrNegativeCounter  = errors.New("counter cannot be negative")
-)
+type Entitlement struct {
+	Teams struct {
+		Enabled bool    `json:"enabled,omitempty"`
+		Size    Counter `json:"size,omitempty"`
+	} `json:"teams,omitempty"`
+}
+
+var ErrCounterExhausted = errors.New("counter exhausted")
 
 type Counter int64
 
@@ -31,18 +35,7 @@ func (c *Counter) TakeN(i int64) error {
 		return ErrCounterExhausted
 	}
 
-	if remaining := *c - Counter(i); remaining < 0 {
-		return ErrNegativeCounter
-	} else {
-		*c = remaining
-	}
+	*c -= Counter(i)
 
 	return nil
-}
-
-type Entitlement struct {
-	Teams struct {
-		Enabled bool     `json:"enabled,omitempty"`
-		Size    *Counter `json:"size,omitempty"`
-	} `json:"teams,omitempty"`
 }
