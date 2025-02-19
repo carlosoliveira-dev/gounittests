@@ -39,3 +39,18 @@ func (c *Counter) TakeN(i int64) error {
 
 	return nil
 }
+
+// meu código personalizado
+
+//var age int = 20 // não dá pra criar métodos em um tipo primitivo
+
+// type age int // cria um tipo para poder criar métodos nele
+
+// func (myage age) Show() age {
+// 	return myage * 4
+// }
+
+// func main() {
+// 	juniorage := age(50)
+// 	fmt.Println(juniorage.Show())
+// }
